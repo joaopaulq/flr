@@ -17,3 +17,7 @@ var x = (sum $ map (^2) $ map (+(-u)) x) / (n-1)
 
 stdev :: [Float] -> Float
 stdev x = sqrt $ var x
+
+transpose :: [[Float]] -> [[Float]]
+transpose ([]:_) = []
+transpose xs     = (map head xs) : transpose (map tail xs)
