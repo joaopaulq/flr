@@ -3,6 +3,7 @@ module Main where
 import Model
 import Preprocessing
 
+
 main :: IO ()
 main = do
   -- Lê um arquivo csv de /data.
