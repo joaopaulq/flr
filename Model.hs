@@ -9,19 +9,19 @@ import Util
 predict :: ([Float], Float) -> [Float] -> Float
 predict (w, b) x = dot w x + b
 
--- -- | Computes the mean square error (L2 loss).
--- loss :: [Float] -> [Float] -> Float
--- loss yhat y = 0.5 * m * sum $ map (^2) $ zipWith (-) yhat y
---   where
---     m = fromIntegral $ length y
+-- | Computes the mean square error (L2 loss).
+loss :: [Float] -> [Float] -> Float
+loss yhat y = 0.5 * (sum $ map (^2) $ zipWith (-) yhat y) / m
+  where
+    m = fromIntegral $ length y
 
 -- | Performs the gradient descent algorithm.
-fit :: ([Float], Float) -- ^ Coefficients.
+fit :: ([Float], Float) -- ^ Coefficients and intercept.
     -> [[Float]]        -- ^ A dataset.
     -> [Float]          -- ^ Target values.
     -> Float            -- ^ Learning rate.
     -> Int              -- ^ Max number of iterations.
-    -> ([Float], Float) -- ^ Updated coefficients.
+    -> ([Float], Float) -- ^ Updated coefficients and intercept.
 fit (w, b) xs y lr maxiter
   | maxiter == 0 = (w, b)
   | otherwise    = do
