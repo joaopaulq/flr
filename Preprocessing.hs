@@ -19,13 +19,10 @@ normalize xs = [zipWith (/) (zipWith (-) x us) os | x <- xs]
 -- | Split the dataset and the targets values
 -- into training and test sets.
 splitTrainTest :: [[Float]]            -- ^ A dataset.
-               -> [Float]              -- ^ Targets values.
                -> Int                  -- ^ Number of examples in training set.
                -> ([[Float]], [Float],
                    [[Float]], [Float]) -- ^ (training set, training targets, test set, test targets)
-splitTrainTest xs y n = (xtrain, ytrain, xtest, ytrain)
+splitTrainTest xs n = (take n x, take n y, drop n x, drop n y)
   where
-    xtrain = take n xs
-    ytrain = take n y
-    xtest  = drop n xs
-    ytest  = drop n y
+    y = last $ transpose xs
+    x = transpose $ init $ transpose xs
