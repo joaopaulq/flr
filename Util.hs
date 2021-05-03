@@ -2,6 +2,8 @@ module Util where
 
 import Test.QuickCheck
 
+eps = 1e-7 -- Double subtraction precision.
+
 
 dot :: [Double] -> [Double] -> Double
 dot u v = sum $ zipWith (*) u v
@@ -40,16 +42,16 @@ prop_dotCommutative u v = (dot u v) == (dot v u)
 prop_varNonNegative :: NonEmptyList Double -> Bool
 prop_varNonNegative (NonEmpty x) = var x >= 0
 
--- -- | If a constant is added to all values of the variable,
--- -- the variance is unchanged.
--- prop_varAddConstant :: NonEmptyList Double -> Double -> Bool
--- prop_varAddConstant (NonEmpty x) c = var x == var y
---   where
---     y = map (+c) x
---
--- -- | If all values are scaled by a constant, the variance is
--- -- scaled by the square of that constant.
--- prop_varScaled :: NonEmptyList Double -> Double -> Bool
--- prop_varScaled (NonEmpty x) c = (c^2 * var x) == var y
---   where
---     y = map (*c) x
+-- | If a constant is added to all values of the variable,
+-- the variance is unchanged.
+prop_varAddConstant :: NonEmptyList Double -> Double -> Bool
+prop_varAddConstant (NonEmpty x) c = (abs $ var x - var y) <= eps
+  where
+    y = map (+c) x
+
+-- | If all values are scaled by a constant, the variance is
+-- scaled by the square of that constant.
+prop_varScaled :: NonEmptyList Double -> Double -> Bool
+prop_varScaled (NonEmpty x) c = (abs $ c^2 * var x - var y) <= eps
+  where
+    y = map (*c) x
