@@ -14,11 +14,11 @@ main = do
   let (w, b) = ([13, -8, 3], 5) -- True values:
                                 -- w = (2, 4, -1)
                                 -- b = -1.
-  let (xtrain, ytrain, xtest, ytest) = splitTrainTest dataset 0.9
-  let (xtrainNorm, xtestNorm) = (normalize xtrain, normalize xtest)
+  let (xtrain, ytrain, xtest, ytest) = splitTrainTest dataset 0.8
+  -- let (xtrainNorm, xtestNorm) = (normalize xtrain, normalize xtest)
 
-  let (w', b') = fit (w, b) xtrainNorm ytrain 0.01 10000
-  let yhat = map (predict (w', b')) xtrainNorm
+  let (w', b') = fit (w, b) xtrain ytrain 0.01 40000
+  let yhat = map (predict (w', b')) xtrain
 
   putStr "Loss on training: "
   print $ loss ytrain yhat
@@ -27,6 +27,6 @@ main = do
   putStr "Intercept: "
   print b'
   putStr "Test predict: "
-  print $ map (predict (w', b')) xtestNorm
+  print $ map (predict (w', b')) xtest
   putStr "Test expected: "
   print ytest
