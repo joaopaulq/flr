@@ -6,11 +6,15 @@ import Util
   )
 
 -- | Computes the linear regression equation.
-predict :: ([Double], Double) -> [Double] -> Double
+predict :: ([Double], Double) -- ^ Coefficients and intercept.
+        -> [Double]           -- ^ A example of the dataset.
+        -> Double             -- ^ The predict value.
 predict (w, b) x = dot w x + b
 
 -- | Computes the mean square error (L2 loss).
-loss :: [Double] -> [Double] -> Double
+loss :: [Double] -- ^ Predict values.
+     -> [Double] -- ^ Target values.
+     -> Double   -- ^ The loss.
 loss yhat y = 0.5 * (sum $ map (^2) $ zipWith (-) yhat y) / m
   where
     m = fromIntegral $ length y
