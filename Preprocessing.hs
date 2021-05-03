@@ -18,10 +18,11 @@ normalize xs = [zipWith (/) (zipWith (-) x us) os | x <- xs]
 -- | Split the dataset and the targets values
 -- into training and test sets.
 splitTrainTest :: [[Double]]             -- ^ A dataset.
-               -> Int                    -- ^ Number of examples in training set.
+               -> Double                 -- ^ Percentage of examples on the training set.
                -> ([[Double]], [Double],
                    [[Double]], [Double]) -- ^ (training set, training targets, test set, test targets)
-splitTrainTest xs n = (take n x, take n y, drop n x, drop n y)
+splitTrainTest xs p = (take n x, take n y, drop n x, drop n y)
   where
+    n = round $ (*p) $ fromIntegral $ length xs
     y = last $ transpose xs
     x = transpose $ init $ transpose xs

@@ -7,10 +7,6 @@ import Test.QuickCheck
 dot :: Num a => [a] -> [a] -> a
 dot u v = sum $ zipWith (*) u v
 
--- | Performs a matrix multiplication.
-matmul :: Num a => [[a]] -> [[a]] -> [[a]]
-matmul xs ys = xs
-
 -- | Rows becames columns and columns becames rows.
 transpose :: [[a]] -> [[a]]
 transpose ([]:_) = []
@@ -36,12 +32,6 @@ stdev x = sqrt $ var x
 -- | The dot product respects the commutative property.
 prop_dotCommutative :: (Eq a, Num a) => [a] -> [a] -> Bool
 prop_dotCommutative u v = (dot u v) == (dot v u)
-
--- | The operation of taking the transpose is an involution (self-inverse).
-prop_transposeInvolution :: (Eq a) => NonEmptyList [NonEmptyList a] -> Bool
-prop_transposeInvolution (NonEmpty m) = transpose mt == m
-  where
-    mt = transpose m
 
 -- | Variance is invariant with respect to changes in a location parameter.
 prop_varNonNegative :: (Eq a, Ord a, Floating a) => NonEmptyList a -> Bool
