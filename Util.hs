@@ -2,56 +2,60 @@ module Util where
 
 import Test.QuickCheck
 
-eps = 1e-7 -- Double subtraction precision.
 
-
-dot :: [Double] -> [Double] -> Double
+-- | Computes the dot product of two lists.
+dot :: Num a => [a] -> [a] -> a
 dot u v = sum $ zipWith (*) u v
 
-transpose :: [[Double]] -> [[Double]]
+-- | Performs a matrix multiplication.
+matmul :: Num a => [[a]] -> [[a]] -> [[a]]
+matmul xs ys = xs
+
+-- | Rows becames columns and columns becames rows.
+transpose :: [[a]] -> [[a]]
 transpose ([]:_) = []
 transpose xs     = (map head xs) : transpose (map tail xs)
 
-mean :: [Double] -> Double
+-- | Computes the arithmetic mean of a list.
+mean :: Floating a => [a] -> a
 mean x = sum x / n
   where
     n = fromIntegral $ length x
 
-var :: [Double] -> Double
+-- | Computes the population variance of a list.
+var :: Floating a => [a] -> a
 var x = (sum $ map ((^2) . (-) u) x) / n
   where
     u = mean x
     n = fromIntegral $ length x
 
-stdev :: [Double] -> Double
+-- | Computes the standard deviation of a list.
+stdev :: Floating a => [a] -> a
 stdev x = sqrt $ var x
 
 -- | The dot product respects the commutative property.
-prop_dotCommutative :: [Double] -> [Double] -> Bool
+prop_dotCommutative :: (Eq a, Num a) => [a] -> [a] -> Bool
 prop_dotCommutative u v = (dot u v) == (dot v u)
 
--- -- | The operation of taking the transpose is an involution (self-inverse).
--- prop_transposeInvolution :: [[Double]] -> Bool
--- prop_transposeInvolution a = transpose at == a
---   where
---     at = transpose a
+-- | The operation of taking the transpose is an involution (self-inverse).
+prop_transposeInvolution :: (Eq a) => NonEmptyList [NonEmptyList a] -> Bool
+prop_transposeInvolution (NonEmpty m) = transpose mt == m
+  where
+    mt = transpose m
 
 -- | Variance is invariant with respect to changes in a location parameter.
--- That is, if a constant is added to all values of the variable,
--- the variance is unchanged.
-prop_varNonNegative :: NonEmptyList Double -> Bool
+prop_varNonNegative :: (Eq a, Ord a, Floating a) => NonEmptyList a -> Bool
 prop_varNonNegative (NonEmpty x) = var x >= 0
 
--- | If a constant is added to all values of the variable,
--- the variance is unchanged.
-prop_varAddConstant :: NonEmptyList Double -> Double -> Bool
-prop_varAddConstant (NonEmpty x) c = (abs $ var x - var y) <= eps
+-- | If a constant is added to all values of the variable, the variance is unchanged.
+prop_varAddConstant :: (Eq a, Ord a, Floating a) => NonEmptyList a -> a -> Bool
+prop_varAddConstant (NonEmpty x) c = (abs $ var x - var y) <= 1e-8
   where
     y = map (+c) x
 
 -- | If all values are scaled by a constant, the variance is
 -- scaled by the square of that constant.
-prop_varScaled :: NonEmptyList Double -> Double -> Bool
-prop_varScaled (NonEmpty x) c = (abs $ c^2 * var x - var y) <= eps
+prop_varScaled :: (Eq a, Ord a, Floating a) => NonEmptyList a -> a -> Bool
+prop_varScaled (NonEmpty x) c = (abs $ c^2 * var x - var y) <= 1e-8
   where
     y = map (*c) x
