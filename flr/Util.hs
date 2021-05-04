@@ -2,6 +2,9 @@ module Util where
 
 import Test.QuickCheck
 
+-- Subtraction precision order.
+eps :: (Floating a) => a
+eps = 1e-7
 
 -- | Computes the dot product of two lists.
 dot :: Num a => [a] -> [a] -> a
@@ -33,19 +36,35 @@ stdev x = sqrt $ var x
 prop_dotCommutative :: (Eq a, Num a) => [a] -> [a] -> Bool
 prop_dotCommutative u v = (dot u v) == (dot v u)
 
--- | Variance is invariant with respect to changes in a location parameter.
+-- | The sum of deviations of the items from their arithmetic
+-- mean is always zero.
+prop_meanDeviations :: (Eq a, Ord a, Floating a) => NonEmptyList a -> Bool
+prop_meanDeviations (NonEmpty x) = (abs $ (sum $ map ((-) u) x) - 0) <= eps
+  where
+    u = mean x
+
+-- | Variance is invariant with respect to changes
+-- in a location parameter.
 prop_varNonNegative :: (Eq a, Ord a, Floating a) => NonEmptyList a -> Bool
 prop_varNonNegative (NonEmpty x) = var x >= 0
 
--- | If a constant is added to all values of the variable, the variance is unchanged.
+-- | If a constant is added to all values of the variable,
+-- the variance is unchanged.
 prop_varAddConstant :: (Eq a, Ord a, Floating a) => NonEmptyList a -> a -> Bool
-prop_varAddConstant (NonEmpty x) c = (abs $ var x - var y) <= 1e-8
+prop_varAddConstant (NonEmpty x) c = (abs $ var x - var y) <= eps
   where
     y = map (+c) x
 
 -- | If all values are scaled by a constant, the variance is
 -- scaled by the square of that constant.
 prop_varScaled :: (Eq a, Ord a, Floating a) => NonEmptyList a -> a -> Bool
-prop_varScaled (NonEmpty x) c = (abs $ c^2 * var x - var y) <= 1e-8
+prop_varScaled (NonEmpty x) c = (abs $ c^2 * var x - var y) <= eps
+  where
+    y = map (*c) x
+
+-- | If all values are scaled by a constant, the standard deviation is
+-- scaled by the absolute value of that constant.
+prop_stdevScaled :: (Eq a, Ord a, Floating a) => NonEmptyList a -> a -> Bool
+prop_stdevScaled (NonEmpty x) c = (abs $ (abs c * stdev x) - stdev y) <= eps
   where
     y = map (*c) x
