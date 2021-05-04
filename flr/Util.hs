@@ -65,6 +65,6 @@ prop_varScaled (NonEmpty x) c = (abs $ c^2 * var x - var y) <= eps
 -- | If all values are scaled by a constant, the standard deviation is
 -- scaled by the absolute value of that constant.
 prop_stdevScaled :: (Eq a, Ord a, Floating a) => NonEmptyList a -> a -> Bool
-prop_stdevScaled (NonEmpty x) c = (abs $ (abs c * stdev x) - stdev y) <= eps
+prop_stdevScaled (NonEmpty x) c = (abs $ abs c * stdev x - stdev y) <= eps
   where
     y = map (*c) x
