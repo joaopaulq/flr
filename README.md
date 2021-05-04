@@ -11,7 +11,7 @@ A functional implementation of linear regression.
 - QuickCheck
 
 ## Como usar
-Definir no arquivo `/flr/Main.hs` todos os parâmetros (lr, maxiter, porcentagem dataset, w, b) e o dataset.
+Definir no arquivo `/flr/Main.hs` todos os parâmetros (taxa de aprendizagem, máximo número de interações, porcentagem de divisão do dataset) os coeficientes, a intercecção e o dataset.
 ```
 ~ ghci
 ~ Prelude> :l /flr/Main.hs
