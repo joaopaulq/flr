@@ -23,6 +23,5 @@ Definir no arquivo `/flr/Main.hs` todos os parâmetros (taxa de aprendizagem, m�
 * Valores altos no dataset causam NaN no resultado final.
 * O ideal seria ler um dataset de um arquivo `.csv` e converter para `[[Floating]]`,
   mas devido curto tempo de entrega não conseguimos implementar essa funcionalidade.
-* Outra funcionalidade seria para ler os parâmetros (lr, maxiter, porcentagem do dataset)
-  da linha de comando usando um parsing.
-* Plotar o hiperplano aprendido junto com o conjunto de dados.
+* Outra funcionalidade seria para ler os parâmetros da linha de comando usando um parsing.
+* Plotar o hiperplano aprendido junto com o dataset.
