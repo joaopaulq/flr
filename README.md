@@ -1,6 +1,11 @@
 # flr
 A functional implementation of linear regression.
 
+## Equipe
+- João Paulo (jpgf)
+- Nara Souza (nsa2)
+- Thiago Casa Nova (tcnl)
+
 ## Requisitos
 - GHC/GHCI
 - QuickCheck
