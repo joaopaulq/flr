@@ -20,4 +20,4 @@ A functional implementation of linear regression.
 -m, --train-percentage   Floating   0 <= m <= 1   % of examples on the training set, default=0.8.
 -l, --train-loss         Bool                     Print the loss on the training set, default=True.
 -t, --test-accuracy      Bool                     Print accuracy for the test set, default=True if m < 1.
--p, --plot               Bool                     Plot learned hyperplane (.png on `/logs`) default=False.
+-p, --plot               Bool                     Plot learned hyperplane (.png on `/logs`), default=False.
