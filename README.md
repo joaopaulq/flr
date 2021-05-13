@@ -10,7 +10,7 @@ A functional implementation of linear regression.
 ```
 ~ ghci
 ~ Prelude> :l /flr/Main.hs
-~ Prelude> main [OPTIONS] "path.csv"
+~ Prelude> main [OPTIONS] data.csv
 ```
 
 ## Options
