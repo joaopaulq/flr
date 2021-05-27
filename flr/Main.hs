@@ -14,7 +14,7 @@ main = do
   let (x, y) = split dataset
 
   let w' = fit w x y 0.01 10000
-  let yhat = matmul w' xtrain
+  let yhat = matmul w' x
   
   putStr "Cost: "
   print $ cost y yhat
