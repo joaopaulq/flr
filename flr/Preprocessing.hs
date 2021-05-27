@@ -6,23 +6,21 @@ import Util
   , transpose
   )
 
--- | Normalize the dataset by subtract the mean and
--- divide by the standard deviation of each feature.
-normalize :: [[Double]] -- ^ A dataset.
-          -> [[Double]] -- ^ Normalized dataset.
-normalize xs = [zipWith (/) (zipWith (-) x us) os | x <- xs]
-  where
-    us = map (mean) $ transpose xs
-    os = map (stdev) $ transpose xs
 
--- | Split the dataset and the targets values
--- into training and test sets.
-splitTrainTest :: [[Double]]             -- ^ A dataset.
-               -> Double                 -- ^ Percentage of examples on the training set.
-               -> ([[Double]], [Double],
-                   [[Double]], [Double]) -- ^ (training set, training targets, test set, test targets)
-splitTrainTest xs p = (take n x, take n y, drop n x, drop n y)
+-- | Normalize a dataset.
+normalize :: [[Double]] -- ^ A dataset.
+          -> [[Double]] -- ^ The normalized dataset.
+-- Subtract the mean and divide by the standard deviation for each feature.
+normalize x = [zipWith (/) (zipWith (-) xi us) os | xi <- x]
   where
-    n = round $ (*p) $ fromIntegral $ length xs
-    y = last $ transpose xs
-    x = transpose $ init $ transpose xs
+    us = map mean $ transpose x -- Mean of each feature.
+    os = map stdev $ transpose x -- Standard deviation of each feature.
+
+
+-- | Split the dataset into input features and targets.
+split :: [[Double]]             -- ^ A dataset.
+      -> ([[Double]], [Double]) -- ^ Training examples.
+split xy p = (intercept x, y)
+  where
+    x = transpose $ init $ transpose xy
+    y = last $ transpose xy
