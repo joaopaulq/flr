@@ -33,7 +33,7 @@ fit w x y lr maxiter
   | otherwise    = do
       let e  = zipWith (-) hx y -- Error term.
       let dJ = map (*lr) $ matmul e $ transpose x -- Partial derivative term.
-      let w' = zipWith (+) w dJ -- Update rule.
+      let w' = zipWith (-) w dJ -- Update rule.
       fit w' x y lr (maxiter-1)
   where
     hx = matmul w x -- The hypothesis.
