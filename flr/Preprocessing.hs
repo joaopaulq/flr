@@ -21,7 +21,7 @@ normalize x = [zipWith (/) (zipWith (-) xi us) os | xi <- x]
 -- | Split the dataset into input features and targets.
 split :: [[Double]]             -- ^ A dataset.
       -> ([[Double]], [Double]) -- ^ Training examples.
-split xy p = (intercept x, y)
+split xy = (intercept x, y)
   where
     x = transpose $ init $ transpose xy
     y = last $ transpose xy
