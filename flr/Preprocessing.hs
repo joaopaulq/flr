@@ -18,7 +18,7 @@ normalize x = [zipWith (/) (zipWith (-) xi us) os | xi <- x]
     os = map stdev $ transpose x -- Standard deviation of each feature.
 
 
--- | Split the dataset into input features and targets.
+-- | Split the dataset into input features (plus intercept term) and targets.
 split :: [[Double]]             -- ^ A dataset.
       -> ([[Double]], [Double]) -- ^ Training examples.
 split xy = (intercept x, y)
