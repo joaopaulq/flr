@@ -8,13 +8,13 @@ eps :: (Floating a) => a
 eps = 1e-7
 
 
--- | Computes the dot product of two lists.
+-- | Computes the dot product of two vectors.
 dot :: Num a => [a] -> [a] -> a
 dot u v = sum $ zipWith (*) u v
 
 
--- | Computes the matrix mutiplication between two matrices.
-matmul :: Num a => [[a]] -> [[a]] -> [a]
+-- | Computes the matrix mutiplication of two matrices.
+matmul :: Num a => [[a]] -> [[a]] -> [[a]]
 matmul (x:xs) ys = map (dot x) ys : matmul xs ys
 
 
@@ -38,7 +38,7 @@ mean x = sum x / n
 
 -- | Computes the population variance of a list.
 var :: Floating a => [a] -> a
-var x = sum (map ((^2) . (-) u) x) / n
+var x = sum (map (^2 . (-) u) x) / n
   where
     u = mean x
     n = fromIntegral $ length x
