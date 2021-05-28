@@ -4,6 +4,7 @@ import Util
   ( mean
   , stdev
   , transpose
+  , intercept
   )
 
 
