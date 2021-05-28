@@ -7,13 +7,6 @@ import Util
   )
 
 
--- | Computes the linear regression equation.
-predict :: [Double] -- ^ The weights.
-        -> [Double] -- ^ A example from the dataset.
-        -> Double   -- ^ The predict value.
-predict = dot
-
-
 -- | Computes the cost function (L2 loss).
 cost :: [Double] -- ^ Predict values.
      -> [Double] -- ^ Target values.
