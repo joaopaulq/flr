@@ -2,7 +2,6 @@
 A functional implementation of linear regression.
 
 ## Requirements
-- Linux
 - GHC/GHCI
 - QuickCheck
 
