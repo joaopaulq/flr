@@ -5,9 +5,9 @@ A functional implementation of linear regression.
 - GHC/GHCI
 - QuickCheck
 
-## How to use
+## Usage
 ```
-~ ghci
+> ghci
 Prelude> :l /flr/Main.hs
 Prelude> main [OPTIONS] data.csv
 ```
